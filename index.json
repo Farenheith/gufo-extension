@@ -9,6 +9,16 @@
       ],
       "releases": [
         {
+          "api_version": ">= 0.3.3",
+          "digest": "sha256:4389cd1a85d2209c61b9aaac3a0a43378069ad5220f65163ec704c6fa5fcc99c",
+          "notes": "Extension API 0.3: prompts that arrive while another session decodes prefill one batch per pass (2048 tokens, following --prefill-batch), 36% faster with less total stall for the decoding session; prompt-cache restores and DSpark checkpoints wait for queued device writes. Built on Gufo a27bbf98 (after 0.34.0, included in 0.35.0).",
+          "platforms": [
+            "linux"
+          ],
+          "revision": "8390e85c5bbd922adbdc8bbcd60473f08341cead",
+          "version": "0.3.0"
+        },
+        {
           "api_version": ">= 0.2.17",
           "digest": "sha256:ec2c884a9eae30f8f683a797ba6148476e87bc2a32eb906ec9b1af0abd0e7f30",
           "notes": "Direction and LoRA adapters (--adapter, --adapter-scale); faster prefill and streamed decode, with more expert cache on streamed builds; --prefill-batch 4096 keeps the prompt cache and gives the same logits as 2048. Built on Gufo 0.33.0.",
