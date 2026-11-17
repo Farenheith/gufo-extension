@@ -79,6 +79,17 @@
       ],
       "releases": [
         {
+          "api_version": ">= 0.3.20",
+          "digest": "sha256:600d5f1d7ef2a7a1e1b2f5d0e1bef9fc1d3741c9934ce67db3a93fb40ca4ea27",
+          "notes": "Adds XDNA NPU support via --npu, Windows support, shared audio decoding and text, vision, audio and decision performance improvements.",
+          "platforms": [
+            "linux",
+            "windows"
+          ],
+          "revision": "f7893c6217f05ce8bff6b6912c695a76a9b1e194",
+          "version": "0.6.0"
+        },
+        {
           "api_version": ">= 0.2.16",
           "digest": "sha256:22d202c229731b913e7fb10e32ba446be1502d8a603da4483b0dd78aa5350788",
           "notes": "Text, VL, audio (ASR/TTS) and decision providers.",
