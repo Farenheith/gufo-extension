@@ -70,6 +70,27 @@
       ],
       "source": "https://github.com/brunobarbosaux-ai/flint-gufo-extension"
     },
+    "gemma4": {
+      "description": "Gemma 4 31B, 31B QAT and 26B-A4B on Strix Halo: MTP drafting, vision, tool calls and reasoning",
+      "homepage": "https://github.com/franzmoca/gemma4-gufo-extension",
+      "license": "MIT",
+      "maintainers": [
+        "@franzmoca"
+      ],
+      "releases": [
+        {
+          "api_version": ">= 0.3.20",
+          "digest": "sha256:6f2e244639d0b3a9290fe6897fad40260de0e43adee5ae3d65cac0fce305386b",
+          "notes": "First registry release. Built on Gufo 0.35.0.",
+          "platforms": [
+            "linux"
+          ],
+          "revision": "8dcfdbb8fe75cc98e4f44cf739bbb3b49ea41207",
+          "version": "0.2.0"
+        }
+      ],
+      "source": "https://github.com/franzmoca/gemma4-gufo-extension"
+    },
     "lfm3": {
       "description": "LFM3 1.7B text, LFM3-VL 2B, LFM3-Audio 2B and d1-Omni 2B on Strix Halo",
       "homepage": "https://github.com/gufo-org/lfm3-gufo-extension",
