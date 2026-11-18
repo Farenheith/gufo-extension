@@ -49,13 +49,13 @@
       ],
       "releases": [
         {
-          "api_version": ">= 0.2.15",
-          "digest": "sha256:ac9a59b5e116f58f3337d8cbffcbbde932a681ef5e95f00abb607ef85bc18d5b",
-          "notes": "DFlash2 speculative decoding: opt-in draft/verify cycle with the Flint-DFlash2 drafter (FLINT_SPEC=dflash, FLINT_DRAFT), fixed and adaptive draft policies, byte-identical greedy output vs spec-off at depths 0/8k/32k/131k, no spec-off regression, prefix-reuse safe in serve. Provider exposes speculative_defaults (dflash2, max 7, min 1, adaptive). Verified serve context ceiling 192k (256k startup hang is pre-existing, see DEFERRED). Built on Gufo 0.32.0.",
+          "api_version": ">= 0.3.0",
+          "digest": "sha256:642250f62f55198a23b88ea98a136832806e8e18246d3700b5736fd875efc672",
+          "notes": "DFlash2 speculative decoding: opt-in draft/verify cycle with the Flint-DFlash2 drafter (--speculative dflash2 --dflash-model <gguf>; drafter must be passed explicitly), fixed and adaptive draft policies (adaptive default), byte-identical greedy output vs spec-off at depths 0/8k/32k/131k, no spec-off regression, prefix-reuse safe in serve, per-session drafter contexts (concurrency-safe), honest per-session ResourceClaim (scratch + MMQ arena + KV granule rounding). Provider exposes speculative_defaults (dflash2, max 7, min 1, adaptive). Ported to extension API 0.3 (required TextSchedulingProfile: pass_tokens 8192). Verified serve context ceiling 192k (256k startup hang is pre-existing, see DEFERRED). Built and validated on Gufo main 390639b3 (API 0.3.27, v0.35.0+).",
           "platforms": [
             "linux"
           ],
-          "revision": "965bb5551a5a47bf4fde5248f5d189028305c482",
+          "revision": "b262cb6a23ad545ebb816710cc58da93f4adda97",
           "version": "0.3.0"
         },
         {
