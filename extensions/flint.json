@@ -1,18 +1,32 @@
 {
   "schema": 1,
   "name": "flint",
-  "description": "Flint 40B MoE text generation",
+  "description": "Flint 40B MoE text generation with optional DFlash2 speculative decoding",
   "homepage": "https://github.com/brunobarbosaux-ai/flint-gufo-extension",
   "license": "MIT",
-  "maintainers": ["@brunobarbosaux-ai"],
+  "maintainers": [
+    "@brunobarbosaux-ai"
+  ],
   "source": "https://github.com/brunobarbosaux-ai/flint-gufo-extension",
   "releases": [
+    {
+      "version": "0.3.0",
+      "revision": "b262cb6a23ad545ebb816710cc58da93f4adda97",
+      "digest": "sha256:642250f62f55198a23b88ea98a136832806e8e18246d3700b5736fd875efc672",
+      "api_version": ">= 0.3.0",
+      "platforms": [
+        "linux"
+      ],
+      "notes": "DFlash2 speculative decoding: opt-in draft/verify cycle with the Flint-DFlash2 drafter (--speculative dflash2 --dflash-model <gguf>; drafter must be passed explicitly), fixed and adaptive draft policies (adaptive default), byte-identical greedy output vs spec-off at depths 0/8k/32k/131k, no spec-off regression, prefix-reuse safe in serve, per-session drafter contexts (concurrency-safe), honest per-session ResourceClaim (scratch + MMQ arena + KV granule rounding). Provider exposes speculative_defaults (dflash2, max 7, min 1, adaptive). Ported to extension API 0.3 (required TextSchedulingProfile: pass_tokens 8192). Verified serve context ceiling 192k (256k startup hang is pre-existing, see DEFERRED). Built and validated on Gufo main 390639b3 (API 0.3.27, v0.35.0+)."
+    },
     {
       "version": "0.2.0",
       "revision": "b8c6d165f0888d5d516563dc382ae0ab24c5eeaa",
       "digest": "sha256:129994a14f8e0c02ba6301a729494b9779cf0b075b39c881323f89d31decdd0c",
       "api_version": ">= 0.2.7",
-      "platforms": ["linux"],
+      "platforms": [
+        "linux"
+      ],
       "notes": "Session contexts are sized to the request (prompt + generation) instead of a hardcoded 8192, clamped to the model's 262144 native context and to free device memory, so long contexts degrade gracefully instead of failing."
     },
     {
@@ -20,7 +34,9 @@
       "revision": "7420f20fa093b7116628c22a898e6b7f43a1424f",
       "digest": "sha256:744ce829609f48129072478364a3903f5bd8550b0d6c53455d78f721d30366cc",
       "api_version": ">= 0.2.7",
-      "platforms": ["linux"],
+      "platforms": [
+        "linux"
+      ],
       "notes": "Weight placement fix: decide kMalloc vs managed once per model load (Flash-Next pattern) instead of a bare hipMalloc per tensor, so machines with a small device-heap cap load successfully."
     },
     {
@@ -28,7 +44,9 @@
       "revision": "efacf0e2f0e8e30f67bccff56dede129928a9f7f",
       "digest": "sha256:6b35a930b4f2f73236be6af94149e4332131162e11e03bfbe88ec0687c1540b0",
       "api_version": ">= 0.2.7",
-      "platforms": ["linux"]
+      "platforms": [
+        "linux"
+      ]
     }
   ]
 }
