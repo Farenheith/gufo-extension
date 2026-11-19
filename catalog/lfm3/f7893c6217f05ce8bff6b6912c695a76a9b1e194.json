@@ -1,0 +1,39 @@
+{
+  "model_lock": {
+    "models": {},
+    "schema": 1
+  },
+  "models": [],
+  "providers": [
+    {
+      "id": "lfm3",
+      "model_ids": [
+        "LFM3-1.7B",
+        "lfm3-1.7b",
+        "LFM3-VL-2B",
+        "lfm3-vl-2b"
+      ]
+    },
+    {
+      "id": "lfm3-audio-asr",
+      "model_ids": [
+        "LFM3-Audio-2B",
+        "lfm3-audio-2b"
+      ]
+    },
+    {
+      "id": "lfm3-audio-tts",
+      "model_ids": [
+        "LFM3-Audio-2B",
+        "lfm3-audio-2b"
+      ]
+    },
+    {
+      "id": "d1",
+      "model_ids": [
+        "d1-Omni-2B",
+        "d1-omni-2b"
+      ]
+    }
+  ]
+}

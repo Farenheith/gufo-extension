@@ -98,8 +98,9 @@ checks what the pull request contains.
    python3 /path/to/gufo-extension/tools/registry.py digest .
    ```
 
-3. Add or extend `extensions/<name>.json`, regenerate `index.json` with
-   `tools/registry.py index`, and run `tools/registry.py check`.
+3. Add or extend `extensions/<name>.json`, run `tools/registry.py catalog <name>`
+   to verify the source and snapshot its model metadata, then run
+   `tools/registry.py check`.
 4. Open a pull request and fill in the template's checklist.
 5. CI checks the entries, confirms `index.json` matches them, and fetches each
    new release to verify its manifest fields and digest. It never changes the
@@ -115,3 +116,24 @@ python3 tools/registry.py verify lfm3      # fetch and compare every release
 ```
 
 The tools need Python 3.10+ and Git only.
+
+## Model catalogue
+
+`tools/registry.py catalog [NAME]` fetches each reviewed revision, verifies its
+source digest, and copies its model declarations, model lock and provider model
+IDs into `catalog/<name>/<revision>.json`. It regenerates `index.json`, whose
+release objects include `models`, `model_lock` and `providers`. It downloads no
+model weights. Entry files and their existing release records stay unchanged.
+
+Gufo uses this metadata to list models without installing extension code. Nix
+consumers can validate model IDs from a pinned registry checkout without
+executing Gufo. Consumers select releases using the same platform and extension
+API compatibility rules as extension installation.
+
+Provider `model_ids` are recognition IDs, which can include aliases. A release
+without `models` and a matching lock supports discovery but does not promise
+automated weight installation. Clients must distinguish those cases.
+
+CI checks that the index matches the snapshots and verifies changed snapshots
+against the reviewed source. Catalogue generation remains an explicit maintainer
+action; CI never updates entries or snapshots.

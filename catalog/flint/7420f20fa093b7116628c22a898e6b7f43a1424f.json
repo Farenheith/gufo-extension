@@ -1,0 +1,17 @@
+{
+  "model_lock": {
+    "models": {},
+    "schema": 1
+  },
+  "models": [],
+  "providers": [
+    {
+      "id": "flint",
+      "model_ids": [
+        "flint-40b",
+        "Flint-40B",
+        "flint"
+      ]
+    }
+  ]
+}

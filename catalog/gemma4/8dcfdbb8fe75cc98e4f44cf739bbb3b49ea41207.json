@@ -1,0 +1,17 @@
+{
+  "model_lock": {
+    "models": {},
+    "schema": 1
+  },
+  "models": [],
+  "providers": [
+    {
+      "id": "gemma4",
+      "model_ids": [
+        "gemma-4-31B-it",
+        "gemma-4-31B-it-qat",
+        "gemma-4-26B-A4B-it"
+      ]
+    }
+  ]
+}

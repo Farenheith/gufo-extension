@@ -11,9 +11,22 @@
         {
           "api_version": ">= 0.3.3",
           "digest": "sha256:4389cd1a85d2209c61b9aaac3a0a43378069ad5220f65163ec704c6fa5fcc99c",
+          "model_lock": {
+            "models": {},
+            "schema": 1
+          },
+          "models": [],
           "notes": "Extension API 0.3: prompts that arrive while another session decodes prefill one batch per pass (2048 tokens, following --prefill-batch), 36% faster with less total stall for the decoding session; prompt-cache restores and DSpark checkpoints wait for queued device writes. Built on Gufo a27bbf98 (after 0.34.0, included in 0.35.0).",
           "platforms": [
             "linux"
+          ],
+          "providers": [
+            {
+              "id": "deepseek41",
+              "model_ids": [
+                "DeepSeek V4.1 Flash"
+              ]
+            }
           ],
           "revision": "8390e85c5bbd922adbdc8bbcd60473f08341cead",
           "version": "0.3.0"
@@ -21,9 +34,22 @@
         {
           "api_version": ">= 0.2.17",
           "digest": "sha256:ec2c884a9eae30f8f683a797ba6148476e87bc2a32eb906ec9b1af0abd0e7f30",
+          "model_lock": {
+            "models": {},
+            "schema": 1
+          },
+          "models": [],
           "notes": "Direction and LoRA adapters (--adapter, --adapter-scale); faster prefill and streamed decode, with more expert cache on streamed builds; --prefill-batch 4096 keeps the prompt cache and gives the same logits as 2048. Built on Gufo 0.33.0.",
           "platforms": [
             "linux"
+          ],
+          "providers": [
+            {
+              "id": "deepseek41",
+              "model_ids": [
+                "DeepSeek V4.1 Flash"
+              ]
+            }
           ],
           "revision": "004f8cc098614663be49dc3073908da00f725c28",
           "version": "0.2.0"
@@ -31,8 +57,21 @@
         {
           "api_version": ">= 0.2.14",
           "digest": "sha256:5fe9152d7ba2545a79f709a304911e5cb63139de91b7114967bf35c43470a721",
+          "model_lock": {
+            "models": {},
+            "schema": 1
+          },
+          "models": [],
           "platforms": [
             "linux"
+          ],
+          "providers": [
+            {
+              "id": "deepseek41",
+              "model_ids": [
+                "DeepSeek V4.1 Flash"
+              ]
+            }
           ],
           "revision": "071c051471f7f00b0b15e88c5eabe19b5662431c",
           "version": "0.1.0"
@@ -51,9 +90,24 @@
         {
           "api_version": ">= 0.2.7",
           "digest": "sha256:129994a14f8e0c02ba6301a729494b9779cf0b075b39c881323f89d31decdd0c",
+          "model_lock": {
+            "models": {},
+            "schema": 1
+          },
+          "models": [],
           "notes": "Session contexts are sized to the request (prompt + generation) instead of a hardcoded 8192, clamped to the model's 262144 native context and to free device memory, so long contexts degrade gracefully instead of failing.",
           "platforms": [
             "linux"
+          ],
+          "providers": [
+            {
+              "id": "flint",
+              "model_ids": [
+                "flint-40b",
+                "Flint-40B",
+                "flint"
+              ]
+            }
           ],
           "revision": "b8c6d165f0888d5d516563dc382ae0ab24c5eeaa",
           "version": "0.2.0"
@@ -61,9 +115,24 @@
         {
           "api_version": ">= 0.2.7",
           "digest": "sha256:744ce829609f48129072478364a3903f5bd8550b0d6c53455d78f721d30366cc",
+          "model_lock": {
+            "models": {},
+            "schema": 1
+          },
+          "models": [],
           "notes": "Weight placement fix: decide kMalloc vs managed once per model load (Flash-Next pattern) instead of a bare hipMalloc per tensor, so machines with a small device-heap cap load successfully.",
           "platforms": [
             "linux"
+          ],
+          "providers": [
+            {
+              "id": "flint",
+              "model_ids": [
+                "flint-40b",
+                "Flint-40B",
+                "flint"
+              ]
+            }
           ],
           "revision": "7420f20fa093b7116628c22a898e6b7f43a1424f",
           "version": "0.1.1"
@@ -71,8 +140,23 @@
         {
           "api_version": ">= 0.2.7",
           "digest": "sha256:6b35a930b4f2f73236be6af94149e4332131162e11e03bfbe88ec0687c1540b0",
+          "model_lock": {
+            "models": {},
+            "schema": 1
+          },
+          "models": [],
           "platforms": [
             "linux"
+          ],
+          "providers": [
+            {
+              "id": "flint",
+              "model_ids": [
+                "flint-40b",
+                "Flint-40B",
+                "flint"
+              ]
+            }
           ],
           "revision": "efacf0e2f0e8e30f67bccff56dede129928a9f7f",
           "version": "0.1.0"
@@ -91,9 +175,24 @@
         {
           "api_version": ">= 0.3.20",
           "digest": "sha256:6f2e244639d0b3a9290fe6897fad40260de0e43adee5ae3d65cac0fce305386b",
+          "model_lock": {
+            "models": {},
+            "schema": 1
+          },
+          "models": [],
           "notes": "First registry release. Built on Gufo 0.35.0.",
           "platforms": [
             "linux"
+          ],
+          "providers": [
+            {
+              "id": "gemma4",
+              "model_ids": [
+                "gemma-4-31B-it",
+                "gemma-4-31B-it-qat",
+                "gemma-4-26B-A4B-it"
+              ]
+            }
           ],
           "revision": "8dcfdbb8fe75cc98e4f44cf739bbb3b49ea41207",
           "version": "0.2.0"
@@ -112,10 +211,47 @@
         {
           "api_version": ">= 0.3.20",
           "digest": "sha256:600d5f1d7ef2a7a1e1b2f5d0e1bef9fc1d3741c9934ce67db3a93fb40ca4ea27",
+          "model_lock": {
+            "models": {},
+            "schema": 1
+          },
+          "models": [],
           "notes": "Adds XDNA NPU support via --npu, Windows support, shared audio decoding and text, vision, audio and decision performance improvements.",
           "platforms": [
             "linux",
             "windows"
+          ],
+          "providers": [
+            {
+              "id": "lfm3",
+              "model_ids": [
+                "LFM3-1.7B",
+                "lfm3-1.7b",
+                "LFM3-VL-2B",
+                "lfm3-vl-2b"
+              ]
+            },
+            {
+              "id": "lfm3-audio-asr",
+              "model_ids": [
+                "LFM3-Audio-2B",
+                "lfm3-audio-2b"
+              ]
+            },
+            {
+              "id": "lfm3-audio-tts",
+              "model_ids": [
+                "LFM3-Audio-2B",
+                "lfm3-audio-2b"
+              ]
+            },
+            {
+              "id": "d1",
+              "model_ids": [
+                "d1-Omni-2B",
+                "d1-omni-2b"
+              ]
+            }
           ],
           "revision": "f7893c6217f05ce8bff6b6912c695a76a9b1e194",
           "version": "0.6.0"
@@ -123,9 +259,46 @@
         {
           "api_version": ">= 0.2.16",
           "digest": "sha256:22d202c229731b913e7fb10e32ba446be1502d8a603da4483b0dd78aa5350788",
+          "model_lock": {
+            "models": {},
+            "schema": 1
+          },
+          "models": [],
           "notes": "Text, VL, audio (ASR/TTS) and decision providers.",
           "platforms": [
             "linux"
+          ],
+          "providers": [
+            {
+              "id": "lfm3",
+              "model_ids": [
+                "LFM3-1.7B",
+                "lfm3-1.7b",
+                "LFM3-VL-2B",
+                "lfm3-vl-2b"
+              ]
+            },
+            {
+              "id": "lfm3-audio-asr",
+              "model_ids": [
+                "LFM3-Audio-2B",
+                "lfm3-audio-2b"
+              ]
+            },
+            {
+              "id": "lfm3-audio-tts",
+              "model_ids": [
+                "LFM3-Audio-2B",
+                "lfm3-audio-2b"
+              ]
+            },
+            {
+              "id": "d1",
+              "model_ids": [
+                "d1-Omni-2B",
+                "d1-omni-2b"
+              ]
+            }
           ],
           "revision": "cbc13fed6deffabe39c2677abf915643137c248a",
           "version": "0.4.0"
@@ -144,9 +317,22 @@
         {
           "api_version": ">= 0.2.21",
           "digest": "sha256:74827093e71d63cd1e170ac1ab6082ae59f792ab6db98161af2722560b93ab2e",
+          "model_lock": {
+            "models": {},
+            "schema": 1
+          },
+          "models": [],
           "notes": "Builds against Gufo 0.33.0. Strycast's 35B-A3B and Ornith runner on the v0.33.0 base: Gufo's own KV-cache option, MTP prime chunk and layered prefill replace Strycast's earlier variants; the probe declines GGUFs whose expert formats the kernels cannot decode.",
           "platforms": [
             "linux"
+          ],
+          "providers": [
+            {
+              "id": "qwen35moe",
+              "model_ids": [
+                "qwen35moe"
+              ]
+            }
           ],
           "revision": "14e46a3f7a79f4404dfd4d819cc8b33a92cd62ca",
           "version": "0.1.0"
@@ -154,8 +340,21 @@
         {
           "api_version": ">= 0.2.0",
           "digest": "sha256:03a06f35f0ca7939a3c6e433b276c01e0d4d3895a223332a304b84d142daa47e",
+          "model_lock": {
+            "models": {},
+            "schema": 1
+          },
+          "models": [],
           "platforms": [
             "linux"
+          ],
+          "providers": [
+            {
+              "id": "qwen35moe",
+              "model_ids": [
+                "qwen35moe"
+              ]
+            }
           ],
           "revision": "4882b7a6954fe472218d0d120ee3665076fe71fa",
           "version": "0.0.1"
@@ -174,9 +373,24 @@
         {
           "api_version": ">= 0.3.0",
           "digest": "sha256:e29f272308caa77287462c7e36790d09814aa9dd80aa3802d6d971d4512d4e88",
+          "model_lock": {
+            "models": {},
+            "schema": 1
+          },
+          "models": [],
           "notes": "First release: Real-ESRGAN SRVGGNetCompact (realesr-animevideov3, realesr-general-x4v3, realesr-general-wdn-x4v3) as an image_generation provider for /v1/images/edits, x2 and x4. GPU-validated on Strix Halo (Windows) against Gufo main 0d238d4f; bit-identical to the in-tree upscaler of gufo-studio-windows. Video upscaling is not included yet.",
           "platforms": [
             "windows"
+          ],
+          "providers": [
+            {
+              "id": "realesrgan",
+              "model_ids": [
+                "realesr-animevideov3",
+                "realesr-general-x4v3",
+                "realesr-general-wdn-x4v3"
+              ]
+            }
           ],
           "revision": "42eed34073ad072e7e97a04888d0af80a8014deb",
           "version": "0.1.0"

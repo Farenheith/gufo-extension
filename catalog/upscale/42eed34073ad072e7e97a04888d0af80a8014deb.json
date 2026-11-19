@@ -1,0 +1,17 @@
+{
+  "model_lock": {
+    "models": {},
+    "schema": 1
+  },
+  "models": [],
+  "providers": [
+    {
+      "id": "realesrgan",
+      "model_ids": [
+        "realesr-animevideov3",
+        "realesr-general-x4v3",
+        "realesr-general-wdn-x4v3"
+      ]
+    }
+  ]
+}

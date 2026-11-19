@@ -4,6 +4,7 @@
   registry.py check              validate every entry and the generated index
   registry.py index              regenerate index.json from extensions/
   registry.py verify NAME [VER]  fetch a release and compare it with its entry
+  registry.py catalog [NAME]     snapshot reviewed model metadata and regenerate index
   registry.py digest DIR         print the source digest gufo computes for DIR
 """
 import hashlib
@@ -18,6 +19,7 @@ import tempfile
 ROOT = Path(__file__).resolve().parent.parent
 ENTRIES = ROOT / "extensions"
 INDEX = ROOT / "index.json"
+CATALOG = ROOT / "catalog"
 SCHEMA = 1
 
 NAME = re.compile(r"^[a-z][a-z0-9_]*$")
@@ -143,7 +145,12 @@ def build_index():
         entry = load(path)
         extensions[entry["name"]] = {
             key: entry[key] for key in ("description", "homepage", "license",
-                                        "maintainers", "source", "releases")}
+                                        "maintainers", "source")}
+        releases = []
+        for release in entry["releases"]:
+            snapshot = load(CATALOG / entry["name"] / f"{release['revision']}.json")
+            releases.append({**release, **snapshot})
+        extensions[entry["name"]]["releases"] = releases
     return {"schema": SCHEMA, "extensions": extensions}
 
 
@@ -155,6 +162,19 @@ def check():
     errors, warnings = [], []
     for path in entries():
         validate(path, load(path), errors, warnings)
+    if not errors:
+        for path in entries():
+            entry = load(path)
+            for release in entry["releases"]:
+                snapshot = CATALOG / entry["name"] / f"{release['revision']}.json"
+                if not snapshot.exists():
+                    errors.append(f"missing {snapshot.relative_to(ROOT)}: run tools/registry.py catalog {entry['name']}")
+                else:
+                    value = load(snapshot)
+                    if (set(value) != {"models", "model_lock", "providers"}
+                            or not isinstance(value["models"], list)
+                            or not isinstance(value["model_lock"], dict)):
+                        errors.append(f"invalid model snapshot {snapshot.relative_to(ROOT)}")
     if not errors:
         expected = render(build_index())
         if not INDEX.exists() or INDEX.read_text() != expected:
@@ -183,7 +203,18 @@ def fetch(source, revision, destination: Path):
         raise SystemExit(f"fetched {head}, expected {revision}")
 
 
-def verify(name, version=None):
+def model_snapshot(source, manifest):
+    models = manifest.get("models", [])
+    lock_path = source / "models.lock.json"
+    lock = load(lock_path) if lock_path.exists() else {"schema": 1, "models": {}}
+    if models and not lock_path.exists():
+        raise SystemExit(f"{source}: declares models without models.lock.json")
+    return {"models": models, "model_lock": lock,
+            "providers": [{key: provider[key] for key in ("id", "model_ids") if key in provider}
+                          for provider in manifest.get("providers", [])]}
+
+
+def verify(name, version=None, refresh=False):
     path = ENTRIES / f"{name}.json"
     if not path.exists():
         raise SystemExit(f"no entry {path.relative_to(ROOT)}")
@@ -208,6 +239,13 @@ def verify(name, version=None):
             digest = tree_digest(source)
             if digest != release["digest"]:
                 problems.append(f"digest is {digest}, the entry says {release['digest']}")
+            snapshot = model_snapshot(source, manifest)
+            snapshot_path = CATALOG / name / f"{release['revision']}.json"
+            if not problems and refresh:
+                snapshot_path.parent.mkdir(parents=True, exist_ok=True)
+                snapshot_path.write_text(render(snapshot))
+            elif not snapshot_path.exists() or load(snapshot_path) != snapshot:
+                problems.append("model catalogue differs from the reviewed source; run tools/registry.py catalog " + name)
             if problems:
                 failures += 1
                 for problem in problems:
@@ -225,6 +263,17 @@ def main(argv):
         return 0
     if len(argv) in (3, 4) and argv[1] == "verify":
         return verify(*argv[2:])
+    if len(argv) in (2, 3) and argv[1] == "catalog":
+        names = [argv[2]] if len(argv) == 3 else [load(p)["name"] for p in entries()]
+        failed = False
+        for name in names:
+            failed = bool(verify(name, refresh=True)) or failed
+        if failed:
+            return 1
+        if all((CATALOG / load(p)["name"] / f"{r['revision']}.json").exists()
+               for p in entries() for r in load(p)["releases"]):
+            INDEX.write_text(render(build_index()))
+        return 0
     if len(argv) == 3 and argv[1] == "digest":
         print(tree_digest(Path(argv[2]).resolve()))
         return 0

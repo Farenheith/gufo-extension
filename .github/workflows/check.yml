@@ -18,8 +18,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Check entries and index
-        run: python3 tools/registry.py check
+      - name: Check entries, catalogue and index
+        run: |
+          python3 tools/registry.py check
+          python3 -m unittest discover -s tools -p 'test_*.py'
 
       - name: Verify changed entries
         env:
@@ -29,8 +31,9 @@ jobs:
           if [[ -z "$BASE" || "$BASE" =~ ^0+$ ]]; then
             changed=$(ls extensions/*.json)
           else
-            changed=$(git diff --name-only --diff-filter=AM "$BASE" HEAD -- 'extensions/*.json')
+            changed=$(git diff --name-only --diff-filter=AM "$BASE" HEAD -- 'extensions/*.json' 'catalog/**/*.json')
           fi
-          for file in $changed; do
-            python3 tools/registry.py verify "$(basename "$file" .json)"
+          names=$(printf '%s\n' "$changed" | awk -F/ 'NF > 1 { if ($1 == "catalog") print $2; else { sub(/\.json$/, "", $2); print $2 } }' | sort -u)
+          for name in $names; do
+            python3 tools/registry.py verify "$name"
           done
