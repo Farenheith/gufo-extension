@@ -163,6 +163,16 @@
       "releases": [
         {
           "api_version": ">= 0.3.20",
+          "digest": "sha256:7a092c1c6b01b7729287e0ff0d77d26467b06b60af364e7c895977d60a9971dc",
+          "notes": "Faster prefill (tensor-core kernels for the loop controllers, contributed by vincentkelleher): 8 % faster at 512 tokens and 11.7 to 13.0 % faster from 2,048 to 32,000 tokens, decode unchanged, KL against the llama.cpp CPU reference unchanged. The weight upload goes through a pinned staging buffer (contributed by derptoolsmidland), which fixes a load that could hang when host memory was full of page cache in active use. Built on Gufo 0.35.0; also tested as an installed module.",
+          "platforms": [
+            "linux"
+          ],
+          "revision": "24f8342d73efcb3a57bb7dcad33a36fe10e3eb48",
+          "version": "0.1.4"
+        },
+        {
+          "api_version": ">= 0.3.20",
           "digest": "sha256:21b5e8acd24df234451f71cbd02720026d62ade64a50ac775c39fa1b3c081b8f",
           "notes": "Speculative decoding: prompt lookup (on by default; INKLING2_LOOKUP=0 turns it off) and the DSpark drafter via --dspark-model (Unsloth's original 402 MB drafter: the manifest's pinned file, named dspark-Inkling-2-Mini-Q8_0_Old.gguf on Unsloth's main), with an adaptive per-request policy. With default settings a single session's text is identical to plain decoding. One session against plain decoding: lookup alone x1.03 code, x1.18 summaries, x2.26 copy-heavy; with the drafter x1.15 code, x1.51 summaries, x2.23 copy-heavy, x0.96 chat; batches x0.99. Built on Gufo 0.35.0.",
           "platforms": [
