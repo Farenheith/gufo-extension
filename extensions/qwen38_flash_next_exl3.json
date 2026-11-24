@@ -10,6 +10,16 @@
   "source": "https://github.com/gufo-org/qwen38-flash-next-exl3-gufo-extension",
   "releases": [
     {
+      "version": "0.1.2",
+      "revision": "9f1cac825391e362a142266807399940c38f677a",
+      "digest": "sha256:1fd7bf1fed41325f73b28fdba7a094f5869b4f5a7f10105c450e6acc8ba61919",
+      "api_version": ">= 0.3.46",
+      "platforms": [
+        "linux"
+      ],
+      "notes": "Same production code as 0.1.1; the ops test now uses its own SwiGLU kernel instead of a private Gufo header. Needs Gufo 831c55d3 or later; Linux only."
+    },
+    {
       "version": "0.1.1",
       "revision": "fd1c48c8ec234ba23f25ae89dbc5e4892208a9fc",
       "digest": "sha256:58a14c011fb89cb8a3115b50212394ad669667424036e5d3173dfb6d69c9aaf6",
