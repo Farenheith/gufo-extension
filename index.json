@@ -204,6 +204,17 @@
       "releases": [
         {
           "api_version": ">= 0.3.20",
+          "digest": "sha256:3714c2681815f5d262f2b89b4516f47db0322de18dae61a153697584983584f8",
+          "notes": "Fixes SharePool most-vexing-parse bug and transposes short-convolution weights for SIMD in the NPU backbone (+13% to +19% NPU prefill across LFM3 models, exact GPU/NPU parity).",
+          "platforms": [
+            "linux",
+            "windows"
+          ],
+          "revision": "a2135d8a5c134dd0e131753ce5ac62cf8e6513a3",
+          "version": "0.6.2"
+        },
+        {
+          "api_version": ">= 0.3.20",
           "digest": "sha256:4b1764c893903640f00066b39881f9f829b90d935ad48d2f04547ae13f6fcf25",
           "notes": "Adds pinned, locked install recipes for LFM3-1.7B, LFM3-VL-2B, LFM3-Audio-2B (shared ASR/TTS) and d1-Omni-2B, enabling gufo model install and NixOS model sync. Runtime code is unchanged from 0.6.0.",
           "platforms": [
