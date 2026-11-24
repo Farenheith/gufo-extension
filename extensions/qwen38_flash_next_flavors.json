@@ -10,6 +10,16 @@
   "source": "https://github.com/codibre/qwen38-flash-next-flavors-gufo-extension",
   "releases": [
     {
+      "version": "0.3.0",
+      "revision": "e666829837fc695440301bcb135bdd34771c8740",
+      "digest": "sha256:e1c645e1ac579d25b11825377c32585c90af6502a985bd838eb07b8e654d256b",
+      "api_version": ">= 0.3.46",
+      "platforms": [
+        "linux"
+      ],
+      "notes": "Built on Gufo's qwen38_flash_next runtime as a dependency (gufo-org/gufo#1376): custom WeightSource binds the flavor checkpoint, the Q5_1/IQ4_NL n-gram table streams through NgramTable::OpenEncoded, the per-layer token embedding reads with pread, and only MoeFfn is overridden. Decode and draft-verify passes compact their routed buckets in-module (the host leaves expert_counts to the vector route), which is what keeps the 512-expert AtomicChat artifact coherent at batch 1. Needs Gufo 831c55d3 or later; Linux only."
+    },
+    {
       "version": "0.2.0",
       "revision": "c22d6ebeded7f34f5929503d54ba1d53b9867aad",
       "digest": "sha256:028658fd6b160bbb145955ed735836f89b667ec0e2a65406975d83e8775e2d37",

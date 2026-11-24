@@ -72,6 +72,16 @@
       "releases": [
         {
           "api_version": ">= 0.3.0",
+          "digest": "sha256:3b8e9e867fe187bb7e6fa2a18c3d7a483c8c45d16afc4e9667e685653ff07557",
+          "notes": "Native tool calls (OpenAI tools/tool_choice, flint-glm dialect, buffered and streamed) and a per-layer row continuation cache: each layer's K/V is append rows, so a capture copies only the valid tokens and a follow-up turn only the new tail; per-session memory is unchanged from 0.3.1. Prefill is split-invariant with even-row checkpoints; the drafter attends to history injected after a restore (8k repeat 41.5 -> 54.0 t/s, follow-up 43.5 -> 68.6); the GGUF mapping is released after upload (load RSS 26.3 -> 2.4 GB). Cache identity is flint-rocm-session-v2/flint-kv-rows-v2, so 0.3.1 disk caches are a miss by design. Greedy output is deterministic per build and spec-on equals spec-off; output can differ from 0.3.1 because prefill now runs every pass on the prefill kernels and the K-quant WMMA dot uses explicit FMAs. The 8 GiB retained-snapshot cap is unchanged. Built and validated on Gufo v0.36.0 (API 0.3.42); source builds on any 0.3.x host. At 262144 tokens, one session loads in ~10 s and two are admitted.",
+          "platforms": [
+            "linux"
+          ],
+          "revision": "cf9f7aa02991049647abe9487979681e8fd99e2b",
+          "version": "0.4.0"
+        },
+        {
+          "api_version": ">= 0.3.0",
           "digest": "sha256:a112bc6e7abc0f3094664301465eaf5e157391f7d8cb01828c87f20ebf2f13cd",
           "notes": "Long-context first-request stall fix: the retained-snapshot claim is capped at 8 GiB, so a full-context snapshot that the host would capture synchronously on the request thread (~15.7 GiB at -c 130000) is refused cheaply instead of copied. First request at 130k context: 14.2 s -> 0.47 s; prefix retention at normal contexts is preserved (8k: cached_tokens reused). No functional change to speculation, sampling or the DFlash2 cycle; gx 3/3 and memory 2/2 re-verified.",
           "platforms": [
@@ -153,6 +163,26 @@
       "releases": [
         {
           "api_version": ">= 0.3.20",
+          "digest": "sha256:7a092c1c6b01b7729287e0ff0d77d26467b06b60af364e7c895977d60a9971dc",
+          "notes": "Faster prefill (tensor-core kernels for the loop controllers, contributed by vincentkelleher): 8 % faster at 512 tokens and 11.7 to 13.0 % faster from 2,048 to 32,000 tokens, decode unchanged, KL against the llama.cpp CPU reference unchanged. The weight upload goes through a pinned staging buffer (contributed by derptoolsmidland), which fixes a load that could hang when host memory was full of page cache in active use. Built on Gufo 0.35.0; also tested as an installed module.",
+          "platforms": [
+            "linux"
+          ],
+          "revision": "24f8342d73efcb3a57bb7dcad33a36fe10e3eb48",
+          "version": "0.1.4"
+        },
+        {
+          "api_version": ">= 0.3.20",
+          "digest": "sha256:21b5e8acd24df234451f71cbd02720026d62ade64a50ac775c39fa1b3c081b8f",
+          "notes": "Speculative decoding: prompt lookup (on by default; INKLING2_LOOKUP=0 turns it off) and the DSpark drafter via --dspark-model (Unsloth's original 402 MB drafter: the manifest's pinned file, named dspark-Inkling-2-Mini-Q8_0_Old.gguf on Unsloth's main), with an adaptive per-request policy. With default settings a single session's text is identical to plain decoding. One session against plain decoding: lookup alone x1.03 code, x1.18 summaries, x2.26 copy-heavy; with the drafter x1.15 code, x1.51 summaries, x2.23 copy-heavy, x0.96 chat; batches x0.99. Built on Gufo 0.35.0.",
+          "platforms": [
+            "linux"
+          ],
+          "revision": "03649d072e4988e0d6e583d9507b65a43d649d49",
+          "version": "0.1.3"
+        },
+        {
+          "api_version": ">= 0.3.20",
           "digest": "sha256:de1fc1d266d4f1b5d5fa62e1eff88c709554d48067fc1ab376cff3cade060c7f",
           "notes": "Batched decode: routed-expert kernels run shared experts together; 4 sessions 79.6 to 86.2 tok/s, outputs bit-identical to 0.1.1. Built on Gufo 0.35.0; tested in-tree and as an installed module.",
           "platforms": [
@@ -182,6 +212,17 @@
         "@fedeizzo"
       ],
       "releases": [
+        {
+          "api_version": ">= 0.3.20",
+          "digest": "sha256:3714c2681815f5d262f2b89b4516f47db0322de18dae61a153697584983584f8",
+          "notes": "Fixes SharePool most-vexing-parse bug and transposes short-convolution weights for SIMD in the NPU backbone (+13% to +19% NPU prefill across LFM3 models, exact GPU/NPU parity).",
+          "platforms": [
+            "linux",
+            "windows"
+          ],
+          "revision": "a2135d8a5c134dd0e131753ce5ac62cf8e6513a3",
+          "version": "0.6.2"
+        },
         {
           "api_version": ">= 0.3.20",
           "digest": "sha256:4b1764c893903640f00066b39881f9f829b90d935ad48d2f04547ae13f6fcf25",
@@ -248,6 +289,47 @@
       ],
       "source": "https://github.com/gufo-extensions/nemotron"
     },
+    "qwen38_flash_next_exl3": {
+      "description": "Qwen3.8 Flash-Next EXL3 4.05, 3.05 and 2.05 bpw checkpoints on Strix Halo with MTP speculative decoding",
+      "homepage": "https://github.com/gufo-org/qwen38-flash-next-exl3-gufo-extension",
+      "license": "MIT AND Apache-2.0",
+      "maintainers": [
+        "@fedeizzo"
+      ],
+      "releases": [
+        {
+          "api_version": ">= 0.3.46",
+          "digest": "sha256:ffb3994a8490a02a979a74c38b6880c7c56982a14b5b514b37ef7af949e4cf27",
+          "notes": "Faster decode GEMV (Wht128Signed + HalfPairScaled + vectorized staging/output) and prefill GEMM (permlanex16 without redundant copy) with bit-identical outputs across 2/3/4 bpw. Needs Gufo 831c55d3 or later; Linux only.",
+          "platforms": [
+            "linux"
+          ],
+          "revision": "3b3675c7f2fcab549b9f7a26606bc54255da183f",
+          "version": "0.1.3"
+        },
+        {
+          "api_version": ">= 0.3.46",
+          "digest": "sha256:1fd7bf1fed41325f73b28fdba7a094f5869b4f5a7f10105c450e6acc8ba61919",
+          "notes": "Same production code as 0.1.1; the ops test now uses its own SwiGLU kernel instead of a private Gufo header. Needs Gufo 831c55d3 or later; Linux only.",
+          "platforms": [
+            "linux"
+          ],
+          "revision": "9f1cac825391e362a142266807399940c38f677a",
+          "version": "0.1.2"
+        },
+        {
+          "api_version": ">= 0.3.46",
+          "digest": "sha256:58a14c011fb89cb8a3115b50212394ad669667424036e5d3173dfb6d69c9aaf6",
+          "notes": "First release: EXL3 providers flash-next-exl3-4bpw, -3bpw and -2bpw (HIP, gfx1151) with checkpoint MTP drafting, built on Gufo's in-tree qwen38_flash_next runtime. Needs Gufo 831c55d3 or later (loadable modules with depends, gufo-org/gufo#1376); Linux only.",
+          "platforms": [
+            "linux"
+          ],
+          "revision": "fd1c48c8ec234ba23f25ae89dbc5e4892208a9fc",
+          "version": "0.1.1"
+        }
+      ],
+      "source": "https://github.com/gufo-org/qwen38-flash-next-exl3-gufo-extension"
+    },
     "qwen38_flash_next_flavors": {
       "description": "Qwen3.8-Flash-Next (qwen4exp) containers on Strix Halo that gufo core rejects: pruned 256-expert coder builds and 512-expert requantizations, IQ1_M through Q5_1, with the per-layer n-gram table served from disk",
       "homepage": "https://github.com/codibre/qwen38-flash-next-flavors-gufo-extension",
@@ -256,6 +338,16 @@
         "@codibre"
       ],
       "releases": [
+        {
+          "api_version": ">= 0.3.46",
+          "digest": "sha256:e1c645e1ac579d25b11825377c32585c90af6502a985bd838eb07b8e654d256b",
+          "notes": "Built on Gufo's qwen38_flash_next runtime as a dependency (gufo-org/gufo#1376): custom WeightSource binds the flavor checkpoint, the Q5_1/IQ4_NL n-gram table streams through NgramTable::OpenEncoded, the per-layer token embedding reads with pread, and only MoeFfn is overridden. Decode and draft-verify passes compact their routed buckets in-module (the host leaves expert_counts to the vector route), which is what keeps the 512-expert AtomicChat artifact coherent at batch 1. Needs Gufo 831c55d3 or later; Linux only.",
+          "platforms": [
+            "linux"
+          ],
+          "revision": "e666829837fc695440301bcb135bdd34771c8740",
+          "version": "0.3.0"
+        },
         {
           "api_version": ">= 0.3.37",
           "digest": "sha256:028658fd6b160bbb145955ed735836f89b667ec0e2a65406975d83e8775e2d37",
