@@ -10,6 +10,16 @@
   "source": "https://github.com/headbouyJB/inkling2-gufo",
   "releases": [
     {
+      "version": "0.1.3",
+      "revision": "03649d072e4988e0d6e583d9507b65a43d649d49",
+      "digest": "sha256:21b5e8acd24df234451f71cbd02720026d62ade64a50ac775c39fa1b3c081b8f",
+      "api_version": ">= 0.3.20",
+      "platforms": [
+        "linux"
+      ],
+      "notes": "Speculative decoding: prompt lookup (on by default; INKLING2_LOOKUP=0 turns it off) and the DSpark drafter via --dspark-model (Unsloth's original 402 MB drafter: the manifest's pinned file, named dspark-Inkling-2-Mini-Q8_0_Old.gguf on Unsloth's main), with an adaptive per-request policy. With default settings a single session's text is identical to plain decoding. One session against plain decoding: lookup alone x1.03 code, x1.18 summaries, x2.26 copy-heavy; with the drafter x1.15 code, x1.51 summaries, x2.23 copy-heavy, x0.96 chat; batches x0.99. Built on Gufo 0.35.0."
+    },
+    {
       "version": "0.1.2",
       "revision": "8bb6cd5eaa76c3aa27c74ca005622735aa294a98",
       "digest": "sha256:de1fc1d266d4f1b5d5fa62e1eff88c709554d48067fc1ab376cff3cade060c7f",
