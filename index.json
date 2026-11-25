@@ -340,12 +340,12 @@
       "releases": [
         {
           "api_version": ">= 0.3.46",
-          "digest": "sha256:e1c645e1ac579d25b11825377c32585c90af6502a985bd838eb07b8e654d256b",
-          "notes": "Built on Gufo's qwen38_flash_next runtime as a dependency (gufo-org/gufo#1376): custom WeightSource binds the flavor checkpoint, the Q5_1/IQ4_NL n-gram table streams through NgramTable::OpenEncoded, the per-layer token embedding reads with pread, and only MoeFfn is overridden. Decode and draft-verify passes compact their routed buckets in-module (the host leaves expert_counts to the vector route), which is what keeps the 512-expert AtomicChat artifact coherent at batch 1. Needs Gufo 831c55d3 or later; Linux only.",
+          "digest": "sha256:fdf7b59033c6144efdcf7f5ab4b0be67fd63e40a0fdf1313f94aeaf41300c6c1",
+          "notes": "Built on Gufo's qwen38_flash_next runtime as a dependency (gufo-org/gufo#1376): custom WeightSource binds the flavor checkpoint, the Q5_1/IQ4_NL n-gram table streams through NgramTable::OpenEncoded, the per-layer token embedding reads with pread, and only MoeFfn is overridden. Decode and draft-verify passes compact their routed buckets in-module (the host leaves expert_counts to the vector route), which is what keeps the 512-expert AtomicChat artifact coherent at batch 1. Also serves component-cache catch-up passes (routing.last_only) over the last row alone, which keeps MTP sessions stable across checkpoint restores. Needs Gufo 831c55d3 or later; Linux only.",
           "platforms": [
             "linux"
           ],
-          "revision": "e666829837fc695440301bcb135bdd34771c8740",
+          "revision": "c6b15ffb0d21a971cb60015c146371d6cae2cc40",
           "version": "0.3.0"
         },
         {
